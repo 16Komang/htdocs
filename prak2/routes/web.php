@@ -41,6 +41,6 @@ Route :: prefix('list')->group(function(){
     Route::get('/KunjunganIndustri', [HalamanProgram::class, 'index8']);
 });
 
-Route ::get('/aboutus', [HalamanAboutUs::class,'index9']);
+Route ::get('/AboutUs', [HalamanAboutUs::class,'index9']);
 
 Route ::get('/ContactUs', [HalamanContactUs::class,'index10']);
