@@ -10,7 +10,7 @@ class PegawaiController extends Controller
     public function index() { 
  
         // mengambil data pegawai yang pertama
-        $pegawai = Pegawai::first(); 
+        $pegawai = Pegawai::all(); 
      
         // mengirim data pegawai ke view pegawai 
         return view('pegawai', ['pegawai' => $pegawai]); 
