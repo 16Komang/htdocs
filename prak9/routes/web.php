@@ -26,3 +26,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/search', [MahasiswaController::class, 'search'])->name('search');
+
+Route::get('/mahasiswa/nilai/{mahasiswa}',[MahasiswaController::class,'nilai'])->name('nilai');

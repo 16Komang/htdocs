@@ -6,6 +6,8 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\models\Kelas;
+use App\models\Mahasiswa_Matakuliah;
+
 
 class MahasiswaController extends Controller
 {
@@ -128,6 +130,12 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::where('Nama', 'like', "%" . $keyword . "%")->paginate(5);
         return view('mahasiswa.index', compact('mahasiswa'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+    public function nilai($id_mahasiswa)
+    {
+        $mhs = Mahasiswa_Matakuliah::with('matakuliah')->where("mahasiswa_id", $id_mahasiswa)->get();
+        $mhs->mahasiswa = Mahasiswa::with('kelas')->where("nim", $id_mahasiswa)->first();
+        return view('mahasiswa.nilai', compact('mhs'));
     }
 
 };
