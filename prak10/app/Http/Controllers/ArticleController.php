@@ -72,7 +72,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-     //
+        $article = Article::find($id);
+
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -84,7 +86,23 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::find($id);
+
+        $article->title     = $request->title;
+        $article->content   = $request->content;
+
+        if ($article->featured_image && file_exists(storage_path('app/public' . $article->featured_image))) {
+            Storage::delete('public/' . $article->featured_image);
+        }
+
+        $image_name = $request->file('image')->store('images', 'public');
+        $article->featured_image = $image_name;
+
+        $article->save();
+
+        return redirect()
+            ->route('articles.index')
+            ->with('success', 'Artikel Berhasil Diupdate');
     }
 
     /**
@@ -96,5 +114,12 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+    }
+
+    public function cetak_pdf()
+    {
+        $articles = Article::all();
+        $pdf = PDF::loadview('articles.articles_pdf', compact('articles'));
+        return $pdf->stream();
     }
 }
